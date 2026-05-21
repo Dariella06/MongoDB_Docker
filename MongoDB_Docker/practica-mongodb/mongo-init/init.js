@@ -266,10 +266,10 @@ db.comandes.insertMany([
         _id: 1,
         client_id: 1,
         productes: [
-            { producte_id: 1, quantitat: 1 },
-            { producte_id: 10, quantitat: 2 }
+            { producte_id: 1, quantitat: 1, preu_unitari: 29.99 },
+            { producte_id: 10, quantitat: 2, preu_unitari: 129.99 }
         ],
-        total: 459.97,
+        total: 289.97,
         estat: "enviat",
         data: new Date()
     },
@@ -277,7 +277,7 @@ db.comandes.insertMany([
         _id: 2,
         client_id: 2,
         productes: [
-            { producte_id: 4, quantitat: 1 }
+            { producte_id: 4, quantitat: 1, preu_unitari: 899.99 }
         ],
         total: 899.99,
         estat: "pendent",
@@ -287,7 +287,7 @@ db.comandes.insertMany([
         _id: 3,
         client_id: 3,
         productes: [
-            { producte_id: 2, quantitat: 1 }
+            { producte_id: 2, quantitat: 1, preu_unitari: 499.99 }
         ],
         total: 499.99,
         estat: "enviat",
@@ -297,8 +297,8 @@ db.comandes.insertMany([
         _id: 4,
         client_id: 4,
         productes: [
-            { producte_id: 3, quantitat: 1 },
-            { producte_id: 8, quantitat: 1 }
+            { producte_id: 3, quantitat: 1, preu_unitari: 19.99 },
+            { producte_id: 8, quantitat: 1, preu_unitari: 89.99 }
         ],
         total: 109.98,
         estat: "enviat",
@@ -308,7 +308,7 @@ db.comandes.insertMany([
         _id: 5,
         client_id: 5,
         productes: [
-            { producte_id: 7, quantitat: 1 }
+            { producte_id: 7, quantitat: 1, preu_unitari: 599.99 }
         ],
         total: 599.99,
         estat: "pendent",
@@ -318,7 +318,7 @@ db.comandes.insertMany([
         _id: 6,
         client_id: 6,
         productes: [
-            { producte_id: 5, quantitat: 1 }
+            { producte_id: 5, quantitat: 1, preu_unitari: 799.99 }
         ],
         total: 799.99,
         estat: "enviat",
@@ -328,7 +328,7 @@ db.comandes.insertMany([
         _id: 7,
         client_id: 7,
         productes: [
-            { producte_id: 6, quantitat: 1 }
+            { producte_id: 6, quantitat: 1, preu_unitari: 149.99 }
         ],
         total: 149.99,
         estat: "pendent",
@@ -338,7 +338,7 @@ db.comandes.insertMany([
         _id: 8,
         client_id: 8,
         productes: [
-            { producte_id: 9, quantitat: 1 }
+            { producte_id: 9, quantitat: 1, preu_unitari: 499.99 }
         ],
         total: 499.99,
         estat: "enviat",
@@ -348,8 +348,8 @@ db.comandes.insertMany([
         _id: 9,
         client_id: 9,
         productes: [
-            { producte_id: 10, quantitat: 1 },
-            { producte_id: 3, quantitat: 1 }
+            { producte_id: 10, quantitat: 1, preu_unitari: 129.99 },
+            { producte_id: 3, quantitat: 1, preu_unitari: 19.99 }
         ],
         total: 149.98,
         estat: "pendent",
@@ -359,9 +359,9 @@ db.comandes.insertMany([
         _id: 10,
         client_id: 10,
         productes: [
-            { producte_id: 1, quantitat: 1 }
+            { producte_id: 1, quantitat: 1, preu_unitari: 29.99 }
         ],
-        total: 199.99,
+        total: 29.99,
         estat: "enviat",
         data: new Date()
     }

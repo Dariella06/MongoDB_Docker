@@ -1,7 +1,7 @@
 db = db.getSiblingDB('botiga')
 
 // Utilitza $and per cercar productes actius amb preu entre 20 € i 100 €
-let con1 = db.productes.find({$and: [{preu: {$gt: 20, $lt: 100}}, {actius: true}]})
+let con1 = db.productes.find({$and: [{preu: {$gt: 20, $lt: 100}}, {actiu: true}]})
 print("Busca productos activos con precio entre 20 y 100")
 printjson(con1)
 
@@ -31,7 +31,7 @@ print("Calcular el precio medio por categoria")
 printjson(con6.toArray())
 
 // Calcula el total de consum per client (quan s’ha gastat cada client).
-let con7 = db.comandes.aggregate([{$group: {_id: "$client_id", total_gastat: {$sum: "$productes"}}}])
+let con7 = db.comandes.aggregate([{ $unwind: "$productes" },{ $group: {_id: "$client_id", total_gastat: { $sum: { $multiply: ["$productes.quantitat", "$productes.preu_unitari"]}}}}])
 print("Calcular el total de consumo de los clientes")
 printjson(con7.toArray())
 
