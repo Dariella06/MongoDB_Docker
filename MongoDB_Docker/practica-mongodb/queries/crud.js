@@ -50,35 +50,37 @@ let resultat2 = db.productes.insertMany([
         creat_el: new Date()
     }
 ])
+print("Varios documentos insertados:")
+printjson(resultat2.insertedIds)
 
 // ----------------- FIND ---------------
 // Listar todos los productos de la colección
 let find1 = db.productes.find()
-printjson("Encontrar todos los productos:")
+print("Encontrar todos los productos:")
 printjson(find1.toArray())
 
 
 // Buscar todos los productos inferior a 50 euros
 let find2 = db.productes.find({ preu: { $lt: 50 } })
-printjson("Encontrar todos los productos inferiores a 50:")
+print("Encontrar todos los productos inferiores a 50:")
 printjson(find2.toArray())
 
 
 // Buscar productos con categoría específica y stock mayor a 0
 let find3 = db.productes.find({ categoria: "ofertes", estoc: { $gt: 0 } })
-printjson("Productos de ofertes con stock > 0:")
+print("Productos de ofertes con stock > 0:")
 printjson(find3.toArray())
 
 
 // Buscar productos con valoración >= 4.0
 let find4 = db.productes.find({ valoracio: { $gte: 4.0 } },{ nom: 1, preu: 1, valoracio: 1, _id: 0 })
-printjson("Productos con valoración >= 4.0:")
+print("Productos con valoración >= 4.0:")
 printjson(find4.toArray())
 
 
 // Buscar productos por etiqueta
 let find5 = db.productes.find({ etiquetes: "tecnologia" })
-printjson("Productos con etiqueta 'tecnologia':")
+print("Productos con etiqueta 'tecnologia':")
 printjson(find5.toArray())
 
 

@@ -35,35 +35,37 @@ let con7 = db.comandes.aggregate([{$group: {_id: "$client_id", total_gastat: {$s
 print("Calcular el total de consumo de los clientes")
 printjson(con7.toArray())
 
-// Crear un índice simple al campo "categoria"
-let ind1 = db.productes.createIndex({categoria: 1})
-print("Crear índice: " + ind1)
+// Crea un índex simple al camp categoria
+let ind1 = db.productes.createIndex({ categoria: 1 })
+print("Índex simple creat: " + ind1)
 
-// Crear un índice compuesto por "categoria" y "preu"
-let ind2 = db.productes.createIndex({categoria: 1, preu: -1})
-print("Crear índice compuesto: " + ind2)
+// Crea un índex compost per (categoria, preu)
+let ind2 = db.productes.createIndex({ categoria: 1, preu: -1 })
+print("Índex compost creat: " + ind2)
 
-// Crea un índice de texto en el campo nombre para permitir búsquedas full-text
-let ind3 = db.productes.createIndex({nom: "text"})
-print("Crear índice de texto para permitir búsquedas: " + ind3)
+// Crea un índex de text al camp nom per permetre cerques full-text
+let ind3 = db.productes.createIndex({ nom: "text" })
+print("Índex de text creat: " + ind3)
 
-// Utiliza explain('executionStats')  para comparar una consulta sin indice y con indice
-// SIN índice, primero borro el indice
-let borrar = db.productes.dropIndex({ categoria: 1 }) 
-print("Borrar indice: " + borrar)
+// Elimino el indice
+let del = db.productes.dropIndex("categoria_1")
+print("Índex eliminat: " + del)
 
-let sinIndice = db.productes.find({ categoria: "ofertes" }).explain("executionStats")
+// SIN ÍNDICE
 print("SIN ÍNDICE")
+let sinIndice = db.productes.find({ categoria: "ofertes" }).explain("executionStats")
 printjson(sinIndice)
 
-// Crear índice
-db.productes.createIndex({ categoria: 1 })
+// Creamos de nuevo el índice
+let ind4 = db.productes.createIndex({ categoria: 1 })
+print("Índex recreat: " + ind4)
 
-let conIndice = db.productes.find({ categoria: "ofertes" }).explain("executionStats")
+// CON ÍNDICE
 print("CON ÍNDICE")
+let conIndice = db.productes.find({ categoria: "ofertes" }).explain("executionStats")
 printjson(conIndice)
 
-// Listar todos los indices de la conleccion
-let listIn = db.productes.getIndexes()
+// Llista tots els índexs de la col·lecció amb getIndexes()
 print("Todos los índices:")
+let listIn = db.productes.getIndexes()
 printjson(listIn)

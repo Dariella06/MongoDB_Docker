@@ -40,8 +40,8 @@ docker compose up -d
 <img src="../MongoDB_Docker/images/image_3.png" alt="Comandos de eliminar contenedores">
 
 **2. Explica la diferència entre un volum named (amb nom) i un bind mount (ruta del host). Quan convé usar cada un?**<br>
-Un volumen named es una carpeta que Docker crea y gestiona él mismo en su zona privada con el nombre que tú le des.
-Un bind mount es una carpeta de tu propio ordenador que tú eliges y conectas directamente al contenedor con Docker.
+El volum named es un volumen que lo gestiona y lo crea automaticamente el Docker internamente, mientras que le bind mount crea el usuario una carpeta o agarra una existente vinculandolo al volemn de docker, docker ahi solo funciona de entrelazar esa carpeta y su volumen.
+El named volume conviene usarlo cuando solo te importa que los datos persistan y no necesitas acceder a ellos directamente desde el host. El bind mount conviene cuando necesitas editar archivos desde tu máquina y que los cambios se reflejen al instante en el contenedor, como por ejemplo en desarrollo.
 
 **3. Explica la diferència entre l’estratègia embedding i l’estratègia referència amb exemples. Cal que els exemples siguin diferents dels que s’exposen en aquest document.**<br>
 La diferencia es que en la estrategia embedding se guardan todos los datos relacionados dentro del mismo documento, mientras que en la estrategia de referencia los datos se separan en diferentes documentos y se conectan mediante un identificador (ID).
@@ -72,7 +72,8 @@ La diferencia es que en la estrategia embedding se guardan todos los datos relac
 ```
 
 **4. Explica quina estratègia o estratègies has fet servir en la col·lecció comandes i per quin motiu.**<br>
-Lo que yo utilice fue las dos estrategias ya que puse todos los datos en un mismo documento pero también hago la rederencia al producto y al cliente.
+la estrategia que utilice son las dos, ya que junte todo en un documento pero hice las relaciones de productos y clientes.
+Las use para poder combinar todo el contenido teniendo en un solo documento para consultarlo de forma mas directa, pero también las relacione para saber a que cliente y que productos va dirigido.
 
 ## Bloc 3
 **1. Tal com has creat la col·lecció de productes, el seu nom és únic? Justifica la resposta.**<br>
@@ -112,104 +113,158 @@ db.productes.find({}, {nom: 1, preu: 1, _id: 0 })
 
 **3. Llista totes les funcions i operadors que hagis utilitzat en les consultes, explica el seu significat i descriu un exemple d’ús diferent dels exemples d’aquest enunciat.**<br>
 
-
 ### Funciones
-- insertOne(): Inserta un documento.
+- getSiblingDB(): Puede acceder o cambiar a otra base de datos.
 ```
-db.videojocs.insertOne({
-    _id: 1,
-    nom: "Minecraft",
-    preu: 29.99,
-    plataforma: "PC"
-})
+db.getSiblingDB("botiga")
 ```
 
-
-- insertMany(): Inserta varios documentos.
+- insertOne(): Inserta un único documento en una colección.
 ```
-db.videojocs.insertMany([
-    { _id: 2, nom: "FIFA 24", preu: 69.99, plataforma: "PS5" },
-    { _id: 3, nom: "Zelda", preu: 59.99, plataforma: "Switch" }
-])
-```
-- find(): Encuentra varios documentos, puedes agregarle opciones si es algo más específico.
-```
-db.videojocs.find({ plataforma: "PS5" })
-```
-- updateOne(): Actualiza un documento.
-```
-db.videojocs.updateOne(
-    { nom: "Minecraft" },
-    { $set: { preu: 24.99 } }
-)
-```
-- updateMany(): Actualiza varios documentos.
-```
-db.videojocs.updateMany(
-    { plataforma: "PS5" },
-    { $inc: { preu: 5 } }
-)
+db.clients.insertOne({
+    _id: 4,
+    nom: "Reyna",
+    email: "reyna@gmail.com",
+    telefon: "672345678",
+    adreca: {
+        carrer: "Carrer Major",
+        ciutat: "Barcelona",
+        codi_postal: "08001"
+    },
+    data_registro: new Date()
+});
 ```
 
-
-- deleteOne(): Elimina un documento.
+- insertMany(): Inserta varios documentos en una sola operación.
 ```
-db.videojocs.deleteOne({ nom: "Zelda" })
-```
-- deleteMany(): Elimina varios documentos.
-```
-db.videojocs.deleteMany({ plataforma: "PC" })
-```
-
-
-### Operadores de consulta (find)
-- $lt: Opción que indica que el valor debe ser menor que el resultado que quieres encontrar.
-```
-db.videojocs.find({ preu: { $lt: 50 } })
-```
-- $lte: Opción que indica que el valor debe ser menor o igual al resultado que quieres encontrar.
-```
-db.videojocs.find({ preu: { $lte: 60 } })
-```
-
-
-- Filtro por campo directo: { categoria: "ofertes" }: Indica encontrar productos con una categoría específica.
-```
-db.videojocs.find({ plataforma: "Switch" })
-```
-
-
-- Búsqueda en array: { etiquetes: "tecnologia" }: Busca documentos que contengan esa etiqueta.
-```
-db.videojocs.find({ etiquetes: "aventura" })
+db.clients.insertMany([
+    {
+        _id: 4,
+        nom: "Reyna",
+        email: "reyna@gmail.com",
+        telefon: "672345678",
+        adreca: {
+            carrer: "Carrer Major",
+            ciutat: "Barcelona",
+            codi_postal: "08001"
+        },
+        data_registro: new Date()
+    },
+    {
+        _id: 5,
+        nom: "Marc",
+        email: "marc@gmail.com",
+        telefon: "699000111",
+        adreca: {
+            carrer: "Carrer Nou",
+            ciutat: "Tarragona",
+            codi_postal: "43001"
+        },
+        data_registro: new Date()
+    }
+]);
 ```
 
-
-### Operadores de actualización
-- $set: Actualiza el valor específico del documento.
+- find(): Busca documentos dentro de una colección.
 ```
-db.videojocs.updateOne(
-    { nom: "Minecraft" },
-    { $set: { preu: 19.99 } }
-)
+db.clients.find({ "adreca.ciutat": "Barcelona" });
 ```
 
-
-- $inc: Incrementa el valor de un registro específico.
+- updateOne(): Actualiza un único documento.
 ```
-db.videojocs.updateOne(
-    { nom: "FIFA 24" },
-    { $inc: { preu: 10 } }
-)
+db.clients.updateOne(
+    { _id: 4 },
+    { $set: { telefon: "600111222" } }
+);
 ```
 
-
-- $addToSet: Agrega un elemento a un array solo si ese elemento todavía no existe, evitando que se repita.
+- updateMany(): Actualiza varios documentos a la vez.
 ```
-db.videojocs.updateOne(
-    { nom: "Minecraft" },
-    { $addToSet: { etiquetes: "sandbox" } }
-)
+db.clients.updateMany(
+    { "adreca.ciutat": "Barcelona" },
+    { $set: { "adreca.ciutat": "BCN" } }
+);
+```
+
+- deleteOne(): Elimina un único documento.
+```
+db.clients.deleteOne({ _id: 4 });
+```
+
+- deleteMany(): Elimina varios documentos según una condición.
+```
+db.clients.deleteMany({ "adreca.ciutat": "Barcelona" });
+```
+
+- print(): Muestra texto por consola.
+```
+print("Client: ");
+printjson(find1.toArray())
+```
+
+- printjson(): Muestra documentos JSON de forma estructurada.
+```
+printjson(find1.toArray());
+```
+
+- toArray(): Convierte el resultado de una consulta en un array.
+```
+printjson(find1.toArray())
+
+```
+
+- new Date(): Genera una fecha y hora.
+```
+{
+    nom: "Guitarra electrica", 
+    preu: 20.45, 
+    categoria: "electrònica",
+    estoc: 10, 
+    valoracio: 4.9, 
+    actiu: true, 
+    etiquetes: ["instrument", "cordes"],
+    creat_el: new Date()
+},
+```
+
+### Operadores
+- $lt: Busca valores menores que otro valor.
+```
+db.clients.find({ _id: { $lt: 4 } });
+```
+
+- $gt: Busca valores mayores que otro valor.
+```
+db.clients.find({ _id: { $gt: 4 } });
+```
+
+- $gte: Busca valores mayores o iguales que otro valor.
+```
+db.clients.find({ _id: { $gte: 4 } });
+```
+
+- $set: Modifica el valor de un campo.
+```
+db.clients.updateOne(
+    { _id: 4 },
+    { $set: { email: "reyna.nou@gmail.com" } }
+);
+```
+
+- $inc: Incrementa o decrementa un valor numérico.
+```
+db.clients.updateOne(
+    { _id: 4 },
+    { $inc: { _id: 1 } }
+);
+```
+
+- $addToSet: Añade un valor a un array evitando duplicados.
+```
+db.clients.updateOne(
+    { _id: 4 },
+    { $addToSet: { etiquetes: "VIP" } }
+);
 ```
 
 
@@ -230,44 +285,37 @@ El compromiso **(trade-off)** entre lectura y escritura es que mejora los índic
 ### Funciones utilizadas
 - find(): realizar consultas simples
 ```
-db.productes.find({ categoria: "ofertes" })
+db.clients.find({ "adreca.ciutat": "Barcelona" })
 ```
-
 
 - sort(): ordenar resultados
 ```
-db.productes.find().sort({ preu: 1 })
+db.clients.find().sort({ nom: 1 })
 ```
-
 
 - limit(): limitar el número de resultados
 ```
-db.productes.find().limit(5)
+db.clients.find().limit(3)
 ```
-
 
 - aggregate(): realizar consultas avanzadas con agrupación
 ```
-db.productes.aggregate([{ $group: { _id: "$categoria" } }])
+db.clients.aggregate([{ $group: { _id: "$adreca.ciutat" } }])
 ```
-
 
 - createIndex(): crear índices
 ```
-db.productes.createIndex({ categoria: 1 })
-```
-- getIndexes(): listar índices existentes
-```
-db.productes.getIndexes()
-```
-- explain(): analizar el rendimiento de una consulta
-```
-db.productes.find({ categoria: "ofertes" }).explain('executionStats')
+db.clients.createIndex({ nom: 1 })
 ```
 
-- hint(): forzar el uso de un índice específico
+- getIndexes(): listar índices existentes
 ```
-db.productes.find({ categoria: "ofertes" }).hint({ categoria: 1 }).explain('executionStats')
+db.clients.getIndexes()
+```
+
+- explain(): analizar el rendimiento de una consulta
+```
+db.clients.find({ nom: "Reyna" }).explain('executionStats')
 ```
 
 ### Operadores de consulta (find)
@@ -294,14 +342,14 @@ db.productes.find({
 - $gte: Si el valor es mayor o igual que
 ```
 db.productes.find({
-  preu: { $gte: 20 }
+  preu: { $gte: 50 }
 })
 ```
 
 - $lte: Si el valor es menor o igual que
 ```
 db.productes.find({
-  preu: { $lte: 100 }
+  preu: { $lte: 200 }
 })
 ```
 
