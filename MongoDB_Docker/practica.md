@@ -73,3 +73,281 @@ La diferencia es que en la estrategia embedding se guardan todos los datos relac
 
 **4. Explica quina estratègia o estratègies has fet servir en la col·lecció comandes i per quin motiu.**<br>
 Lo que yo utilice fue las dos estrategias ya que puse todos los datos en un mismo documento pero también hago la rederencia al producto y al cliente.
+
+## Bloc 3
+**1. Tal com has creat la col·lecció de productes, el seu nom és únic? Justifica la resposta.**<br>
+No, no es único ya que, si intentara ponerlo, no puedo hacerlo directamente en la colección. Tendría que ejecutar una operación aparte para indicar que es único, ya que el insert solo sirve para poner datos, en comparación con una operación donde sí se puede definir.
+
+
+**2. Què significa el terme “projectar” en les consultes? Explica-ho amb un exemple diferent del d’aquest enunciat.**<br>
+El termino projectar significa que solo mostrara los datos selecionados y lo demas lo ocultara.
+
+
+**Ej:**
+- Si yo tengo este producto.
+```
+{
+  nom: "Llibre",
+  preu: 14.99,
+  categoria: "lectura",
+  estoc: 10
+}
+```
+
+
+- Ahora lo que hago es projectar solo el nomrbe y precio
+```
+db.productes.find({}, {nom: 1, preu: 1, _id: 0 })
+```
+
+
+- Entonces solo se mostraria lo que que selecione para visualizar.
+```
+{
+  nom: "Llibre",
+  preu: 14.99
+}
+```
+
+
+**3. Llista totes les funcions i operadors que hagis utilitzat en les consultes, explica el seu significat i descriu un exemple d’ús diferent dels exemples d’aquest enunciat.**<br>
+
+
+### Funciones
+- insertOne(): Inserta un documento.
+```
+db.videojocs.insertOne({
+    _id: 1,
+    nom: "Minecraft",
+    preu: 29.99,
+    plataforma: "PC"
+})
+```
+
+
+- insertMany(): Inserta varios documentos.
+```
+db.videojocs.insertMany([
+    { _id: 2, nom: "FIFA 24", preu: 69.99, plataforma: "PS5" },
+    { _id: 3, nom: "Zelda", preu: 59.99, plataforma: "Switch" }
+])
+```
+- find(): Encuentra varios documentos, puedes agregarle opciones si es algo más específico.
+```
+db.videojocs.find({ plataforma: "PS5" })
+```
+- updateOne(): Actualiza un documento.
+```
+db.videojocs.updateOne(
+    { nom: "Minecraft" },
+    { $set: { preu: 24.99 } }
+)
+```
+- updateMany(): Actualiza varios documentos.
+```
+db.videojocs.updateMany(
+    { plataforma: "PS5" },
+    { $inc: { preu: 5 } }
+)
+```
+
+
+- deleteOne(): Elimina un documento.
+```
+db.videojocs.deleteOne({ nom: "Zelda" })
+```
+- deleteMany(): Elimina varios documentos.
+```
+db.videojocs.deleteMany({ plataforma: "PC" })
+```
+
+
+### Operadores de consulta (find)
+- $lt: Opción que indica que el valor debe ser menor que el resultado que quieres encontrar.
+```
+db.videojocs.find({ preu: { $lt: 50 } })
+```
+- $lte: Opción que indica que el valor debe ser menor o igual al resultado que quieres encontrar.
+```
+db.videojocs.find({ preu: { $lte: 60 } })
+```
+
+
+- Filtro por campo directo: { categoria: "ofertes" }: Indica encontrar productos con una categoría específica.
+```
+db.videojocs.find({ plataforma: "Switch" })
+```
+
+
+- Búsqueda en array: { etiquetes: "tecnologia" }: Busca documentos que contengan esa etiqueta.
+```
+db.videojocs.find({ etiquetes: "aventura" })
+```
+
+
+### Operadores de actualización
+- $set: Actualiza el valor específico del documento.
+```
+db.videojocs.updateOne(
+    { nom: "Minecraft" },
+    { $set: { preu: 19.99 } }
+)
+```
+
+
+- $inc: Incrementa el valor de un registro específico.
+```
+db.videojocs.updateOne(
+    { nom: "FIFA 24" },
+    { $inc: { preu: 10 } }
+)
+```
+
+
+- $addToSet: Agrega un elemento a un array solo si ese elemento todavía no existe, evitando que se repita.
+```
+db.videojocs.updateOne(
+    { nom: "Minecraft" },
+    { $addToSet: { etiquetes: "sandbox" } }
+)
+```
+
+
+## Bloc 4
+**Documenta la diferència segons el valor nDocs Examined.**<br>
+La diferencia entre los dos es que el índice hace que MongoDB no tenga que recorrer toda la colección, reduciendo el valor de nDocsExamined y mejorando el rendimiento de la consulta.
+
+
+**1. Quan pot ser perjudicial tenir massa índexs en una col·lecció? Explica el compromís (trade-off) entre lectura i escriptura.**<br>
+Puede ser perjudicial cuando empiece a afectar al rendimiento de la base de datos. Ayudan a mejorar la búsqueda, pero tener demasiados puede hacer que el rendimiento sea más lento.
+
+Por ejemplo, al insertar, actualizar o eliminar un documento, el índice también debe actualizarse junto con los datos, y si hay demasiados índices, estas operaciones pueden volverse más lentas cuanto mayor sea el número de índices.
+
+El compromiso **(trade-off)** entre lectura y escritura es que mejora los índices aumentando la velocidad de las consultas de lectura, pero empeora el rendimiento de las operaciones de escritura.
+
+**2. Llista totes les funcions i operadors que hagis utilitzat en les consultes, explica el seu significat i descriu un exemple d’ús diferent dels exemples d’aquest enunciat.**<br>
+
+### Funciones utilizadas
+- find(): realizar consultas simples
+```
+db.productes.find({ categoria: "ofertes" })
+```
+
+
+- sort(): ordenar resultados
+```
+db.productes.find().sort({ preu: 1 })
+```
+
+
+- limit(): limitar el número de resultados
+```
+db.productes.find().limit(5)
+```
+
+
+- aggregate(): realizar consultas avanzadas con agrupación
+```
+db.productes.aggregate([{ $group: { _id: "$categoria" } }])
+```
+
+
+- createIndex(): crear índices
+```
+db.productes.createIndex({ categoria: 1 })
+```
+- getIndexes(): listar índices existentes
+```
+db.productes.getIndexes()
+```
+- explain(): analizar el rendimiento de una consulta
+```
+db.productes.find({ categoria: "ofertes" }).explain('executionStats')
+```
+
+- hint(): forzar el uso de un índice específico
+```
+db.productes.find({ categoria: "ofertes" }).hint({ categoria: 1 }).explain('executionStats')
+```
+
+### Operadores de consulta (find)
+- $and: devuelve documentos que cumplen todas las condiciones.
+```
+db.productes.find({
+  $and: [
+    { actiu: true },
+    { preu: { $gte: 50 } }
+  ]
+})
+```
+
+- $or: devuelve documentos que cumplen al menos una condición.
+```
+db.productes.find({
+  $or: [
+    { categoria: "electrònica" },
+    { preu: 100 }
+  ]
+})
+```
+
+- $gte: Si el valor es mayor o igual que
+```
+db.productes.find({
+  preu: { $gte: 20 }
+})
+```
+
+- $lte: Si el valor es menor o igual que
+```
+db.productes.find({
+  preu: { $lte: 100 }
+})
+```
+
+
+- $regex: Busca por patrones en texto
+```
+db.productes.find({
+  nom: { $regex: "iphone" }
+})
+```
+
+### Operadores de agregación (aggregate)
+- $group: Agrupa los documentos por un campo
+```
+db.productes.aggregate([
+  { $group: { _id: "$categoria" } }
+])
+```
+
+- $sum: Suma los valores o cuenta documentos
+```
+db.productes.aggregate([
+  { $group: { _id: "$categoria", total: { $sum: 1 } } }
+])
+```
+
+- $avg: Calcula la media
+```
+db.productes.aggregate([
+  { $group: { _id: "$categoria", media: { $avg: "$preu" } } }
+])
+```
+
+
+### Tipos de índices usados
+- Índice simple: El índice se crea sobre un solo campo.
+```
+db.productes.createIndex({ categoria: 1 })
+```
+
+- Índice compuesto: El índice se crea sobre varios campos.
+```
+db.productes.createIndex({ categoria: 1, preu: -1 })
+```
+
+- Índice de texto: El índice permite buscar palabras dentro de campos de texto.:
+```
+db.productes.createIndex({ nom: "text" })
+```
