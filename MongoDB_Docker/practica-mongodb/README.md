@@ -3,10 +3,12 @@
 En Este proyecto se implementara el **Docker + MongoDB**, consistira en diseñar, configurar y aprender sobre el **MongoDB**. 
 Dentro de este proyecto contendra contenedores:
 - **Bloc 0:** Crearemos el repositorio en GitHub o GitLab. Instalaremos **Git** y **Docker** si no los tenemos. Crearemos el archivo practica.md para las respuestas y capturas, y un README.md con la información que nos pide para replicar el proyecto.
-- **Bloc 1:**
-- **Bloc 2:**
-- **Bloc 3:**
-- **Bloc 4:**
+- **Bloc 2:** Crearemos un script para poder llenar automáticamente las colecciones de productes, clients y comandes. También probaremos que los datos no se borren al apagar los contenedores usando volúmenes y responderemos a las preguntas poniendolas en **practica.md**.
+- **Bloc 3:** Desarrollaremos un archivo para hacer las operaciones de CRUD en la base de datos: insertar, leer, actualizar y eliminar datos.
+- **Bloc 4:** Haremos consultas más complejas (Consultas avanzadas, gestión de indices).
+
+## Que es?<br>
+MongoDB es un sistema de gestión de bases de datos NoSQL (No Relacional) de código abierto, diseñado para almacenar, organizar y gestionar grandes volúmenes de información mediante un modelo orientado a documentos independientes, en lugar de utilizar la estructura tradicional de tablas jerárquicas y filas conectadas.
 
 ## Prerrequisitos
 Para ejecutar este proyecto necesitas:<br>
