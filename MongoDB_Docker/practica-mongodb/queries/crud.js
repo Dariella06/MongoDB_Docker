@@ -82,8 +82,6 @@ printjson("Productos con etiqueta 'tecnologia':")
 printjson(find5.toArray())
 
 
-
-
 // ----------------- UPDATE ---------------
 // Actualiza el precio del producto especifico.
 let actu1 = db.productes.updateOne({nom: "Guitarra"}, {$set: {preu: 20.99}})

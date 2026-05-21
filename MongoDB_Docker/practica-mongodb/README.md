@@ -8,7 +8,9 @@ Dentro de este proyecto contendra contenedores:
 - **Bloc 4:** Haremos consultas más complejas (Consultas avanzadas, gestión de indices).
 
 ## Que es?<br>
-MongoDB es un sistema de gestión de bases de datos NoSQL (No Relacional) de código abierto, diseñado para almacenar, organizar y gestionar grandes volúmenes de información mediante un modelo orientado a documentos independientes, en lugar de utilizar la estructura tradicional de tablas jerárquicas y filas conectadas.
+MongoDB es un sistema de gestión de bases de datos NoSQL (No Relacional) que está diseñado para almacenar, organizar y gestionar grandes volúmenes de información mediante un modelo orientado a documentos independientes, en lugar de utilizar la estructura tradicional de tablas jerárquicas y filas conectadas.
+
+##  
 
 ## Prerrequisitos
 Para ejecutar este proyecto necesitas:<br>

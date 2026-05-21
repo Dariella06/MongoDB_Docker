@@ -67,7 +67,7 @@ La diferencia es que en la estrategia embedding se guardan todos los datos relac
 {
   "id": 101,
   "ciudad": "Barcelona",
-  "calle": "Carrer Major 10"
+  "calle": "Carrer Gotic 20"
 }
 ```
 
