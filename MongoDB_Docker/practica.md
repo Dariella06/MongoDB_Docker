@@ -16,6 +16,20 @@ No, no lo garantiza. Mientras el servicio esté arrancado, el otro contenedor pu
 La diferencia entre los dos es que bridge es una red automática que, para comunicarse, utiliza IP y tiene menos control sobre las redes. Comparado con una red personalizada, esta puede comunicarse mediante los nombres de los contenedores y es más ordenada a la hora de gestionar las redes.
 
 ## Bloc 2
+**2.2 Prova de persistència**
+
+- Ejecutamos el comando docker compose up -d para levantar los contenedores en segundo plano
+<img src="../MongoDB_Docker/images/image_1A.png" alt="Comentar los volumenes">
+
+- Accedemos a http://localhost:8081 y comprobamos que la base de datos botiga existe con sus colecciones y datos.
+<img src="../MongoDB_Docker/images/image_2A.png" alt="Comentar los volumenes">
+
+- Ejecutamos docker compose down para parar y eliminar los contenedores y lo volvemos a ejecutar docker compose up -d para levantar los contenedores de nuevo.
+<img src="../MongoDB_Docker/images/image_3A.png" alt="Comentar los volumenes">
+
+- Accedemos de nuevo a http://localhost:8081 y comprobamos que la base de datos botiga sigue existiendo con todos sus datos, mostrando que el volumen sigue con lod datos guardados.
+<img src="../MongoDB_Docker/images/image_4A.png" alt="Comentar los volumenes">
+
 **1. Què passaria si no definíssim cap volum al docker-compose.yml? Fes la prova i documenta el resultat.**<br>
 Lo que pasaria es que al reiniciar el mongodb, se borrarian esos datos de manera permanente y al no tener volumenes que tenian esos datos guardaos, se inicia sin datos.
 
