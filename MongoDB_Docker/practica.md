@@ -47,12 +47,14 @@ El named volume conviene usarlo cuando solo te importa que los datos persistan y
 La diferencia es que en la estrategia embedding se guardan todos los datos relacionados dentro del mismo documento, mientras que en la estrategia de referencia los datos se separan en diferentes documentos y se conectan mediante un identificador (ID).
 
 - **Estrategia embedding**
+```
 {
   "nombre": "Ana",
   "direcciones": [
     { "ciudad": "Barcelona", "calle": "Carrer Major 10" }
   ]
 }
+```
 
 - **Estrategia referencia**
 ```
