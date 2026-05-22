@@ -12,7 +12,7 @@ db = db.getSiblingDB('botiga');
         nom: "Guitarra",
         preu: 29.99,
         categoria: "música",
-        estoc: 6,
+        estoc: 0,
         valoracio: 3.6,
         actiu: true,
         etiquetes: ["música", "instrument", "cordes"],

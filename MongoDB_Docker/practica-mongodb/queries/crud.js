@@ -107,7 +107,7 @@ print("Actualizar 'actiu:false' en todos los productos sin estoc: " + actu4.modi
 
 // ----------------- ELIMINAR ---------------
 // Eliminar un producto por su nombre.
-let del1 = db.productes.deleteOne({nom: "Motxilla"})
+let del1 = db.productes.deleteOne({nom: "Sabates"})
 print("Eliminar un producto por su nombre: " + del1.deletedCount)
 
 
