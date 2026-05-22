@@ -3,7 +3,7 @@ db = db.getSiblingDB('botiga')
 // Utilitza $and per cercar productes actius amb preu entre 20 € i 100 €
 let con1 = db.productes.find({$and: [{preu: {$gt: 20, $lt: 100}}, {actiu: true}]})
 print("Busca productos activos con precio entre 20 y 100")
-printjson(con1)
+printjson(con1.toArray())
 
 // Utilitza $or per cercar productes de categoria 'electrònica' o valoració >= 4.5
 let con2 = db.productes.find({$or: [{categoria: 'electrònica'}, {valoracio: {$gte: 4.5}}]})
