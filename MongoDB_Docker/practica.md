@@ -34,7 +34,7 @@ La diferencia entre los dos es que bridge es una red automática que, para comun
 Lo que pasaria es que al reiniciar el mongodb, se borrarian esos datos de manera permanente y al no tener volumenes que tenian esos datos guardaos, se inicia sin datos.
 
 **Prueba:**<br>
-- Primero lo que hice fue poner en comentarios los volumentes:
+- Primero lo que hice fue poner en comentarios los volumentes:<br>
 <img src="../MongoDB_Docker/images/image_1.png" alt="Comentar los volumenes">
 
 
@@ -46,11 +46,12 @@ docker compose down
 ```
 docker compose up -d
 ```
+<br>
 <img src="../MongoDB_Docker/images/image_2.png" alt="Comandos de eliminar contenedores">
 
 
 - Comprobamos entrando a Mongo Express viendo si la Base de Datos de botiga esta o no.
-    - En este caso no aparece, ya que los datos no se guardan en ningún lugar sin volúmenes y al reiniciar esos datos se pierden.
+    - En este caso no aparece, ya que los datos no se guardan en ningún lugar sin volúmenes y al reiniciar esos datos se pierden.<br>
 <img src="../MongoDB_Docker/images/image_3.png" alt="Comandos de eliminar contenedores">
 
 **2. Explica la diferència entre un volum named (amb nom) i un bind mount (ruta del host). Quan convé usar cada un?**<br>
@@ -132,7 +133,7 @@ db.productes.find({}, {nom: 1, preu: 1, _id: 0 })
 ### Funciones
 - getSiblingDB(): Puede acceder o cambiar a otra base de datos.
 ```
-db.getSiblingDB("botiga")
+db.getSiblingDB("musica")
 ```
 
 - insertOne(): Inserta un único documento en una colección.
@@ -337,78 +338,57 @@ db.clients.find({ nom: "Reyna" }).explain('executionStats')
 ### Operadores de consulta (find)
 - $and: devuelve documentos que cumplen todas las condiciones.
 ```
-db.productes.find({
-  $and: [
-    { actiu: true },
-    { preu: { $gte: 50 } }
-  ]
-})
+db.productes.find({$and: [{ actiu: true },{ preu: { $gte: 50 } }]})
 ```
 
 - $or: devuelve documentos que cumplen al menos una condición.
 ```
-db.productes.find({
-  $or: [
-    { categoria: "electrònica" },
-    { preu: 100 }
-  ]
-})
+db.productes.find({$or: [{ categoria: "electrònica" },{ preu: 100 }]})
 ```
 
 - $gte: Si el valor es mayor o igual que
 ```
-db.productes.find({
-  preu: { $gte: 50 }
-})
+db.productes.find({preu: { $gte: 50 }})
 ```
 
 - $lte: Si el valor es menor o igual que
 ```
-db.productes.find({
-  preu: { $lte: 200 }
-})
+db.productes.find({preu: { $lte: 200 }})
 ```
 
 
-- $regex: Busca por patrones en texto
+- $regex: Busca patrones de texto con una palabra clave
 ```
-db.productes.find({
-  nom: { $regex: "iphone" }
-})
+db.productes.find({nom: { $regex: "iphone" }})
 ```
 
 ### Operadores de agregación (aggregate)
 - $group: Agrupa los documentos por un campo
 ```
-db.productes.aggregate([
-  { $group: { _id: "$categoria" } }
-])
+db.productes.aggregate([{ $group: { _id: "$estat" } }])
 ```
 
 - $sum: Suma los valores o cuenta documentos
 ```
-db.productes.aggregate([
-  { $group: { _id: "$categoria", total: { $sum: 1 } } }
-])
+db.comandes.aggregate([{$group: {_id: "$estat",total: { $sum: 1 }}}])
 ```
 
 - $avg: Calcula la media
 ```
 db.productes.aggregate([
-  { $group: { _id: "$categoria", media: { $avg: "$preu" } } }
-])
+  {$group: {_id: "$actiu",mediaValoracio: { $avg: "$valoracio" }}}])
 ```
 
 
 ### Tipos de índices usados
 - Índice simple: El índice se crea sobre un solo campo.
 ```
-db.productes.createIndex({ categoria: 1 })
+db.productes.createIndex({ estat: 1 })
 ```
 
 - Índice compuesto: El índice se crea sobre varios campos.
 ```
-db.productes.createIndex({ categoria: 1, preu: -1 })
+db.productes.createIndex({ estat: 1, valoracio: -1 })
 ```
 
 - Índice de texto: El índice permite buscar palabras dentro de campos de texto.:
