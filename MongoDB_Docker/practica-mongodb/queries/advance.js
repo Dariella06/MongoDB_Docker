@@ -49,7 +49,9 @@ print("Índex de text creat: " + ind3)
 
 // Elimino el indice
 let del = db.productes.dropIndex("categoria_1")
+let del2 = db.productes.dropIndex("categoria_1_preu_-1")
 print("Índex eliminat: " + del)
+print("Índex eliminat: " + del2)
 
 // SIN ÍNDICE
 print("SIN ÍNDICE")
@@ -58,6 +60,7 @@ printjson(sinIndice)
 
 // Creamos de nuevo el índice
 let ind4 = db.productes.createIndex({ categoria: 1 })
+db.productes.createIndex({ categoria: 1, preu: -1 })
 print("Índex recreat: " + ind4)
 
 // CON ÍNDICE
